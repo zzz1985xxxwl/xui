@@ -59,51 +59,11 @@
     border: solid 0.08em #eeeeee;
     border-radius: .1em;
 }
-.pull-right {
-    float: right;
-}
-.pull-left {
-    float: left;
-}
 .fa.pull-left {
     margin-right: .3em;
 }
 .fa.pull-right {
     margin-left: .3em;
-}
-.fa-spin {
-     animation: fa-spin 2s infinite linear;
-}
-
-@keyframes fa-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-
-.fa-rotate-90 {
-    transform: rotate(90deg);
-}
-.fa-rotate-180 {
-    transform: rotate(180deg);
-}
-.fa-rotate-270 {
-    transform: rotate(270deg);
-}
-
-.fa-flip-horizontal {
-    transform: scale(-1, 1);
-}
-.fa-flip-vertical {
-    transform: scale(1, -1);
-}
-:root .fa-rotate-90, :root .fa-rotate-180, :root .fa-rotate-270, :root .fa-flip-horizontal, :root .fa-flip-vertical {
-    filter: none;
 }
 .fa-stack {
     position: relative;

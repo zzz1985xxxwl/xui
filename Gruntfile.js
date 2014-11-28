@@ -51,7 +51,25 @@ module.exports = function(grunt) {
                 ]
             }
         },
-
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['src/scripts/xui/*.js'],
+                dest: 'src/scripts/xui.js'
+            }
+        },
+        uglify: {
+            options: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+            },
+            dist: {
+                files: {
+                    'dist/xui.min.js': ['<%= concat.dist.dest %>']
+                }
+            }
+        },
         // The actual grunt server settings
         connect: {
             options: {
@@ -122,7 +140,7 @@ module.exports = function(grunt) {
         },
         autoprefixer: {
             options: {
-                browsers: ['last 1 version']
+                browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
             },
             dist: {
                 files: [{
