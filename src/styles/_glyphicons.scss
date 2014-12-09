@@ -5,13 +5,17 @@
 /* FONT PATH
  * -------------------------- */
 @include font-face($icon-font-name, font-files("fontawesome-webfont.eot", "fontawesome-webfont.woff", "fontawesome-webfont.ttf", "fontawesome-webfont.svg"));
-[class^="fa-"]:before, [class*=" fa-"]:before {
+.fa{
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="fa-"]:before, [class*=" fa-"]:before {
+   @extend .fa;
 }
 /* makes the font 33% larger relative to the icon container */
 

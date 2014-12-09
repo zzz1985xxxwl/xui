@@ -21,6 +21,13 @@ $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 $white:					#ffffff !default;
+$white-darker:			darken($white,20%);
+
+$soft-yellow:			#F3E59A !default;
+$soft-pink:				#F3B59B !default;
+$soft-red:				#F29C9C !default;
+$soft-blue:				#0092C7 !default;
+$soft-blue-light:		#9FE0F6 !default;
 
 //== Scaffolding
 //
@@ -431,7 +438,7 @@ $nav-pills-border-radius:                   $border-radius-base !default;
 $nav-pills-active-link-hover-bg:            $component-active-bg !default;
 $nav-pills-active-link-hover-color:         $component-active-color !default;
 
-
+$nav-tree-width:							180px;
 //== Pagination
 //
 //##

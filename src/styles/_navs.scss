@@ -122,20 +122,27 @@
 }
 //Tree
 // -------------------------
+%active-on {
+    @extend .fa;
+    content: "\f0d9";
+    position: absolute;
+    right: -2px;
+    top: 18%;
+    font-size: 2em;
+}
 .nav-tree {
+    width: $nav-tree-width;
     ul, li {
         list-style: none;
         padding: 0;
+        position: relative;
     }
     li>a {
         padding: $nav-link-padding;
         color: $white;
         display: block;
         text-decoration: none;
-        &:hover, &:focus {
-            color: $white;
-            background-color: $gray-light;
-        }
+        cursor: pointer;
     }
     .parent {
         border-top: 1px solid $gray-light;
@@ -143,15 +150,68 @@
         >a>i:first-child {
             margin-right: 10px;
         }
+        &:hover>a {
+            background-color: $gray-dark;
+        }
     }
     .active {
         background-color: $gray-dark;
     }
     .sub {
         background-color: $gray;
+        display: none;
         a {
             padding-left: $nav-link-padding-sub;
-            color: $gray-lighter;
+            color: $white-darker;
+        }
+        li.on a, a:hover, a:focus {
+            color: $white;
+            background-color: $gray-light;
+        }
+        li.on a{
+            background-color: $soft-blue;
+            &:after {
+                @extend %active-on;
+            }
+        }
+    }
+}
+.nav-tree-closed {
+    width: $nav-link-padding-sub;
+    .parent {
+        >a {
+            span, i.fa-angle-left {
+                display: none;
+            }
+            span {
+                margin-left: ($nav-link-padding-sub)/4;
+            }
+        }
+        &.active {
+            background-color: $soft-blue;
+            a:after {
+                @extend %active-on;
+            }
+        }
+    }
+    .sub {
+        position: absolute;
+    }
+    li.parent:hover {
+        a:after {
+            content: "";
+        }
+        span {
+            display: inline-block;
+        }
+        width:$nav-tree-width;
+        ul.sub {
+            display: block;
+            width: -1+($nav-tree-width)-($nav-link-padding-sub);
+            left: ($nav-link-padding-sub)+1;
+            a {
+                padding-left: ($nav-link-padding-sub)/2;
+            }
         }
     }
 }
