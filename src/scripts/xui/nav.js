@@ -32,7 +32,7 @@
             if ($nav.hasClass("nav-tree-closed")) {
                 if ($sub.length === 0) {
                     $this.closest("li.parent").addClass("active").siblings().removeClass("active");
-                };
+                }
                 return;
             }
             if ($sub.length > 0) {

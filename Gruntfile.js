@@ -105,7 +105,7 @@ module.exports = function(grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
-                    'src/scripts/xui/nav.js'
+                    'src/scripts/xui/{nav,notify}.js'
                 ]
             }
         },

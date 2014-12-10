@@ -1,0 +1,42 @@
+//
+// Notify
+// --------------------------------------------------
+$notify-width:350px;
+.notify {
+    position: fixed;
+    z-index: 1000;
+    width: $notify-width;
+    >div {
+        >div {
+            margin: 0;
+        }
+        margin:10px;
+        overflow: hidden;
+    }
+    &.notify-top-center {
+        top: 0;
+        left: 50%;
+        margin-left: -($notify-width/2);
+    }
+    &.notify-top-right {
+        right: 0;
+        top: 0;
+    }
+    &.notify-top-left {
+        left: 0;
+        top: 0;
+    }
+    &.notify-bottom-left {
+        left: 0;
+        bottom: 0;
+    }
+    &.notify-bottom-right {
+        right: 0;
+        bottom: 0;
+    }
+    &.notify-bottom-center {
+        bottom: 0;
+        left: 50%;
+        margin-left: -($notify-width/2);
+    }
+}

@@ -70,8 +70,14 @@
                 <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
             </div>
         </div>
+        <div class="row">
+            <h1>Notify</h1>
+            <button type="button" class="btn btn-info" id="btnNotify">notify</button>
+            <button type="button" class="btn btn-success" id="btnNotifySuccess">success</button>
+        </div>
     </div>
     <script src="jquery/dist/jquery.js"></script>
+    <script src="src/scripts/xui/core.js"></script>
     <script src="src/scripts/xui/affix.js"></script>
     <script src="src/scripts/xui/alert.js"></script>
     <script src="src/scripts/xui/button.js"></script>
@@ -85,6 +91,25 @@
     <script src="src/scripts/xui/tooltip.js"></script>
     <script src="src/scripts/xui/popover.js"></script>
     <script src="src/scripts/xui/nav.js"></script>
+    <script src="src/scripts/xui/notify.js"></script>
+    <script>
+    $(document).ready(function() {
+        $("#btnNotify").click(function(event) {
+            $.notify({
+                text: '321 new',
+                position: "bottom-center"
+            });
+        });
+        $("#btnNotifySuccess").click(function(event) {
+            $.notify({
+                text: '321 new',
+                type:"success",
+                position: "top-center"
+            });
+        });
+
+    });
+    </script>
 </body>
 
 </html>
