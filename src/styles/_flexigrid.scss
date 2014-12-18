@@ -6,7 +6,6 @@
   border: 0px solid $table-border-color;
   overflow: hidden;
   color: #000;
-  @extend .a-t-eo;
 }
 
 .flexigrid.hideBody {
@@ -19,23 +18,10 @@
   padding-right: 2px;
 }
 
-.flexigrid div.hDivBox {
-  float: left;
-  padding-right: 40px;
-  border-bottom:1px solid $table-border-color;
-}
-
-.flexigrid div.bDiv table {
-  margin-bottom: 10px;
-  margin-left: -1px;
-  margin-top: -1px;
-  &.autoht {
-    border-bottom: 0px;
-    margin-bottom: 0px;
-  }
-}
-
-.flexigrid div.nDiv {
+/*
+hide show buttons
+*/
+.flexigrid > div.nDiv {
   border: 1px solid $table-border-color;
   overflow: auto;
   left: 0px;
@@ -43,27 +29,30 @@
   z-index: 999;
   float: left;
   background-color: $white;
-  table {
+  > table {
     margin: 2px;
-  }
-  td {
-    padding: 5px;
-    cursor: default;
-    cursor: pointer;
-  }
-  td.ndcol1 {
-    border-right: 1px solid $table-border-color;
-  }
-  td.ndcol2 {
-    padding-right: 10px;
-  }
-  tr:hover td, tr.ndcolover td {
-    background-color: $table-bg-hover;
+    > tbody {
+      > tr {
+        > td {
+          padding: 5px;
+          cursor: default;
+          cursor: pointer;
+          &.ndcol1 {
+            border-right: 1px solid $table-border-color;
+          }
+          &.ndcol2 {
+            padding-right: 10px;
+          }
+        }
+        &:hover > td, &.ndcolover > td {
+          background-color: $table-bg-hover;
+        }
+      }
+    }
   }
 }
 
-//hide show buttons
-.flexigrid div.nBtn {
+.flexigrid > div.nBtn {
   position: absolute;
   height: 32px;
   width: 14px;
@@ -76,7 +65,6 @@
   cursor: pointer;
   display: none;
   background-color: $white;
-
   @extend .fa;
   &:before {
     @extend .fa-sort-desc;
@@ -121,36 +109,21 @@
   }
 }
 
-//toolbar
-.flexigrid div.tDiv {
-  position: relative;
-  border: 1px solid $table-border-color;
-  border-bottom: 0px;
-  overflow: hidden;
-}
-
-.flexigrid div.tDiv2 {
-  float: left;
-  clear: both;
-  padding: 1px;
-}
-
 //search div
-.flexigrid div.sDiv {
+.flexigrid > div.sDiv {
   position: relative;
   border: 1px solid $table-border-color;
   border-top: 0px;
   overflow: hidden;
   display: none;
-}
-
-.flexigrid div.sDiv2 {
-  float: left;
-  clear: both;
-  padding: 8px;
-  width: 1024px;
-  input, select {
-    vertical-align: middle;
+  > div.sDiv2 {
+    float: left;
+    clear: both;
+    padding: 8px;
+    width: 1024px;
+    input, select {
+      vertical-align: middle;
+    }
   }
 }
 
@@ -161,7 +134,20 @@
   border-right: 1px solid #fff;
   margin: 1px;
 }
+
 /* useless
+//toolbar
+.flexigrid > div.tDiv {
+  position: relative;
+  border: 1px solid $table-border-color;
+  border-bottom: 0px;
+  overflow: hidden;
+  > div.tDiv2 {
+    float: left;
+    clear: both;
+    padding: 1px;
+  }
+}
 .flexigrid div.fbutton {
   float: left;
   display: block;
@@ -195,19 +181,11 @@
 */
 
 /* end toolbar*/
-.flexigrid div.hDiv {
-  position: relative;
-  border-right: 1px solid $table-border-color;
-  border-bottom: 0px;
-  overflow: hidden;
-  margin-bottom: -1px;
-}
 
-.flexigrid div.hDiv table {
-  border-right: 1px solid #fff;
-}
-
-.flexigrid div.cDrag {
+/*
+改变列宽
+*/
+.flexigrid > div.cDrag {
   float: left;
   position: absolute;
   z-index: 2;
@@ -221,57 +199,256 @@
     width: 5px;
     cursor: col-resize;
     &:hover, &.dragging {
-      background: linear-gradient(left, transparent 2px, $soft-blue-light 50%, $soft-blue-light 50%, transparent 51%, transparent);
+      @include background-image(linear-gradient(left, transparent 2px, $soft-blue-light 50%, $soft-blue-light 51%, transparent 52%, transparent));
+      background-image: -ms-linear-gradient(left, $soft-blue-light 0% , $soft-blue-light 100%);
     }
   }
 }
 
-.flexigrid div.iDiv {
-  border: 1px solid #316ac5;
+/*
+用于显示操作数据在最后一行，暂时无用
+*/
+.flexigrid > div.iDiv {
+  border: 1px solid $table-border-color;
   position: absolute;
   overflow: visible;
   background: none;
+  input.tb {
+    border: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    background: none;
+  }
 }
 
-.flexigrid div.iDiv input, .flexigrid div.iDiv select, .flexigrid div.iDiv textarea {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
+/* common inner cell properties*/
+
+.flexigrid div.hDiv > div.hDivBox > table > thead > tr , div.colCopy {
+  font-weight: bold;
+  background-color: $white;
 }
 
-.flexigrid div.iDiv input.tb {
-  border: 0px;
-  padding: 0px;
-  width: 100%;
-  height: 100%;
-  padding: 0px;
-  background: none;
+%flexigridtd {
+  text-align: left;
+  border: 1px solid $table-border-color;
+  overflow: hidden;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  > div {
+    padding: 8px;
+  }
 }
 
-.flexigrid div.bDiv {
+/*
+表头
+*/
+.flexigrid > div.hDiv {
+  position: relative;
+  border-right: 1px solid $table-border-color;
+  border-bottom: 0px;
+  overflow: hidden;
+  margin-bottom: -1px;
+  > div.hDivBox {
+    float: left;
+    padding-right: 40px;
+    border-bottom: 1px solid $table-border-color;
+    > table {
+      > thead {
+        > tr {
+          > th {
+            @extend %flexigridtd;
+            &.thMove {
+              > div {
+                visibility: hidden;
+              }
+            }
+            > div.sdesc,> div.sasc{
+              position: relative;
+              @extend .fa;
+              &:before {
+                position: absolute;
+                top: -2px;
+                left: 50%;
+              }
+            }
+            > div.sdesc {
+              &:before {
+                @extend .fa-caret-up:before;
+              }
+            }
+            > div.sasc {
+              &:before {
+                @extend .fa-caret-down:before;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*
+ 改变列位置时的效果
+*/
+div.colCopy {
+  @extend %flexigridtd;
+}
+
+.flexigrid>div.hDiv {
+  span.cdropleft {
+    z-index: 3;
+    @extend .fa-caret-left;
+  }
+  span.cdropright {
+    right: 0;
+    @extend .fa-caret-right;
+  }
+  span.cdropleft, span.cdropright {
+    @extend .fa;
+    display: block;
+    position: absolute;
+    top: 20%;
+    font-size: 1.4em;
+  }
+}
+
+/*
+body
+*/
+  .flexigrid div.bDiv {
   border: 1px solid $table-border-color;
   border-top: 0px;
   background: #fff;
   overflow: auto;
   position: relative;
+  > table {
+    margin-bottom: 10px;
+    margin-left: -1px;
+    margin-top: -1px;
+    &.autoht {
+      border-bottom: 0px;
+      margin-bottom: 0px;
+    }
+    > tbody > tr {
+      &:hover, &.trOver {
+        background: $table-bg-hover;
+      }
+      &.erow {
+        background: $table-bg-accent;
+      }
+      & > td {
+        @extend %flexigridtd;
+      }
+    }
+  }
 }
 
-.flexigrid div.hGrip {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 5px;
-  width: 5px;
-  margin-right: 1px;
-  cursor: col-resize;
+/* novstripe adjustments 没有td分割线的样式 */
+.flexigrid.novstripe .bDiv > table {
+  > tr {
+    > td {
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+    &.erow > td, > td {
+      &:last-child {
+        border-right-color: $table-border-color;
+      }
+    }
+    &.erow > td {
+      border-right-color: $table-bg-accent;
+      border-left-color: $table-bg-accent;
+    }
+    &.trOver, &:hover {
+      border-left-color: $table-bg-hover;
+      border-right-color: $table-bg-hover;
+    }
+  }
 }
 
-.flexigrid div.hGrip:hover, .flexigrid div.hGrip.hgOver {
-  border-right: 1px solid #999;
-  margin-right: 0px;
+/*page div*/
+.flexigrid>div.pDiv {
+  border: 1px solid $table-border-color;
+  border-top: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  >div.pDiv2 {
+    margin: 3px 3px 3px -2px;
+    float: left;
+    width: 1024px;
+  }
+  .pPageStat, .pcontrol {
+    position: relative;
+    top: 5px;
+    overflow: visible;
+  }
+  input {
+    vertical-align: text-top;
+    position: relative;
+    top: -8px;
+    margin: 3px;
+  }
+  select {
+    margin: 3px;
+  }
+  div.pButton {
+    float: left;
+    border: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    font-size: 1.4em;
+    margin-top: 2px;
+    min-width: 12px;
+    @extend .fa;
+    &:hover, &.pBtnOver {
+      color: $soft-blue;
+    }
+    &.pFirst {
+      @extend .fa-angle-double-left;
+    }
+    &.pPrev {
+      @extend .fa-angle-left;
+      margin-left: 5px;
+    }
+    &.pNext {
+      @extend .fa-angle-right;
+    }
+    &.pLast {
+      @extend .fa-angle-double-right;
+      margin-left: 5px;
+    }
+    &.pReload {
+      @extend .fa-refresh;
+      font-size: 1em;
+      margin-top: 5px;
+      &.loading {
+        @extend .a-spin;
+      }
+    }
+    &.pSearch {
+      @extend .fa-search;
+    }
+  }
+
+  div.pGroup {
+    float: left;
+    background: none;
+    height: 24px;
+    margin: 0px 5px;
+  }
+
 }
 
-//scale bar bottom
-.flexigrid div.vGrip {
+/*
+scale bar bottom
+*/
+.flexigrid > div.vGrip {
   height: 5px;
   overflow: hidden;
   position: relative;
@@ -280,7 +457,7 @@
   text-align: center;
   cursor: row-resize;
   background-color: $table-bg-accent;
-  span {
+  > span {
     display: block;
     margin: 1px auto;
     width: 20px;
@@ -292,257 +469,29 @@
   }
 }
 
-
-.flexigrid div.hDiv th, .flexigrid div.bDiv td
-	/* common cell properties*/          {
-  text-align: left;
-  border: 1px solid $table-border-color;
-  overflow: hidden;
-  vertical-align: top;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.flexigrid div.hDiv th div, .flexigrid div.bDiv td div, div.colCopy div
-	/* common inner cell properties*/          {
-  padding: 8px;
-}
-
-.flexigrid div.hDiv th, div.colCopy {
-  font-weight: bold;
-  height: 24px;
-  cursor: default;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-div.colCopy {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  border: 1px solid $table-border-color;
-  border-bottom: 0px;
-  overflow: hidden;
-}
-
-.flexigrid div.hDiv th.sorted {
-  border-bottom: 0px solid $table-border-color;
-}
-
-.flexigrid div.hDiv th.thOver {
-
-}
-
-.flexigrid div.hDiv th.sorted div {
-  border-bottom: 0;
-  padding-bottom: 8px;
-}
-
-.flexigrid div.hDiv th.thMove {
-  background: #fff;
-  color: #fff;
-}
-
-.flexigrid div.hDiv th.sorted.thMove div {
-  border-bottom: 1px solid #fff;
-  padding-bottom: 4px
-}
-
-.flexigrid div.hDiv th.thMove div {
-  background: #fff !important;
-}
-
-.flexigrid div.hDiv th div.sdesc {
-}
-
-.flexigrid div.hDiv th div.sasc {
-}
-
-.flexigrid div.bDiv td {
-  vertical-align: top;
-  white-space: nowrap;
-}
-
-.flexigrid div.hDiv th div {
-
-}
-
-.flexigrid span.cdropleft {
-  display: block;
-  width: 24px;
-  height: 24px;
-  position: relative;
-  top: -24px;
-  margin-bottom: -24px;
-  z-index: 3;
-}
-
-.flexigrid div.hDiv span.cdropright {
-  display: block;
-  width: 24px;
-  height: 24px;
-  float: right;
-  position: relative;
-  top: -24px;
-  margin-bottom: -24px;
-}
-
-.flexigrid tr td.sorted {
-  background: #f3f3f3;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #f3f3f3;
-}
-
-.flexigrid tr td.sorted div {
-
-}
-
-.flexigrid tr.erow td {
-  background: $table-bg-accent;
-  &.sorted {
-    background: #e3e3e3;
-    border-bottom: 1px solid #e3e3e3;
-    div {
-
-    }
+/*
+改变表宽
+*/
+.flexigrid > div.hGrip {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 5px;
+  width: 5px;
+  margin-right: 1px;
+  cursor: col-resize;
+  border-right: 1px solid transparent;
+  &:hover, &.hgOver {
+    border-right: 1px solid #aaaaaa;
   }
-}
-
-.flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
-  background: #d9ebf5;
-  border-left: 1px solid #eef8ff;
-  border-bottom: 1px dotted #a8d8eb;
-}
-
-.flexigrid div.bDiv tr.trSelected:hover td, .flexigrid div.bDiv tr.trSelected:hover td.sorted, .flexigrid div.bDiv tr.trOver.trSelected td.sorted, .flexigrid div.bDiv tr.trOver.trSelected td, .flexigrid tr.trSelected td.sorted, .flexigrid tr.trSelected td {
-  border-right: 1px solid #d2e3ec;
-  border-left: 1px solid #eef8ff;
-  border-bottom: 1px solid #a8d8eb;
-}
-
-/* novstripe adjustments */
-.flexigrid.novstripe .bDiv table {
-  border-bottom: 1px solid $table-border-color;
-  border-right: 1px solid $table-border-color;
-}
-
-.flexigrid.novstripe div.bDiv td {
-  border-right-color: #fff;
-}
-
-.flexigrid.novstripe div.bDiv tr.erow td.sorted {
-  border-right-color: #e3e3e3;
-}
-
-.flexigrid.novstripe div.bDiv tr td.sorted {
-  border-right-color: #f3f3f3;
-}
-
-.flexigrid.novstripe div.bDiv tr.erow td {
-  border-right-color: #f7f7f7;
-  border-left-color: #f7f7f7;
-}
-
-.flexigrid.novstripe div.bDiv tr.trSelected:hover td, .flexigrid.novstripe div.bDiv tr.trSelected:hover td.sorted, .flexigrid.novstripe div.bDiv tr.trOver.trSelected td.sorted, .flexigrid.novstripe div.bDiv tr.trOver.trSelected td, .flexigrid.novstripe tr.trSelected td.sorted, .flexigrid.novstripe tr.trSelected td {
-  border-right: 1px solid #0066FF;
-  border-left: 1px solid #0066FF;
-}
-
-.flexigrid.novstripe div.bDiv tr.trOver td, .flexigrid.novstripe div.bDiv tr:hover td {
-  border-left-color: #d9ebf5;
-  border-right-color: #d9ebf5;
-}
-
-/* end novstripe */
-.flexigrid div.pDiv {
-  border: 1px solid $table-border-color;
-  border-top: 0px;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-}
-
-.flexigrid div.pDiv div.pDiv2 {
-  margin: 3px;
-  margin-left: -2px;
-  float: left;
-  width: 1024px;
-}
-
-div.pGroup {
-  float: left;
-  background: none;
-  height: 24px;
-  margin: 0px 5px;
-}
-
-.flexigrid div.pDiv .pPageStat, .flexigrid div.pDiv .pcontrol {
-  position: relative;
-  top: 5px;
-  overflow: visible;
-}
-
-.flexigrid div.pDiv input {
-  vertical-align: text-top;
-  position: relative;
-  top: -8px;
-  margin: 3px;
-}
-
-.flexigrid div.pDiv select {
-  margin: 3px;
-}
-
-.flexigrid div.pDiv div.pButton {
-  float: left;
-  //  width: 18px;
-  //  height: 18px;
-  border: 0;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  font-size: 1.4em;
-  margin-top: 2px;
-  min-width: 12px;
-  @extend .fa;
-}
-
-.flexigrid div.pDiv div.pButton:hover, .flexigrid div.pDiv div.pButton.pBtnOver {
-  color: $soft-blue;
-}
-
-.flexigrid .pSearch {
-}
-
-.flexigrid .pFirst {
-  @extend .fa-angle-double-left;
-}
-
-.flexigrid .pPrev {
-  @extend .fa-angle-left;
-  margin-left: 5px;
-}
-
-.flexigrid .pNext {
-  @extend .fa-angle-right;
-}
-
-.flexigrid .pLast {
-  @extend .fa-angle-double-right;
-  margin-left: 5px;
-}
-
-.flexigrid div.pDiv div.pButton.pReload {
-  @extend .fa-refresh;
-  font-size: 1em;
-  margin-top: 5px;
-}
-
-.flexigrid .pReload.loading {
-  @extend .a-spin;
-}
-
-/* ie adjustments */
-.flexigrid.ie div.hDiv th div, .flexigrid.ie div.bDiv td div, div.colCopy.ie div
-	/* common inner cell properties*/          {
-  overflow: hidden;
+  > span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 20px;
+    overflow: hidden;
+    background-image: -ms-linear-gradient(left, $table-border-color 0%, $table-border-color 35%, #fff 36%, #fff 64%, $table-border-color 65%, $table-border-color);
+    @include background-image(linear-gradient(left, $table-border-color 0%, $table-border-color 35%, #fff 36%, #fff 64%, $table-border-color 65%, $table-border-color));
+  }
 }

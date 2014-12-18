@@ -82,7 +82,7 @@
 			resizable: true, //allow table resizing
 			url: false, //URL if using data from AJAX
 			method: 'POST', //data sending method
-			dataType: 'xml', //type of data for AJAX, either xml or json
+			dataType: 'json', //type of data for AJAX, either xml or json
 			errormsg: 'Connection Error',
 			usepager: false,
 			nowrap: true,
@@ -162,7 +162,8 @@
 						cdpos = 0;
 					}
 					$('div:eq(' + n + ')', g.cDrag).css({
-						'left': (!(browser.mozilla) ? cdpos - cdcounter : cdpos) + 'px'
+                        'left': (cdpos - cdcounter) + 'px'
+						//'left': (!(browser.mozilla) ? cdpos - cdcounter : cdpos) + 'px'
 					}).show();
 					cdleft = cdpos;
 					cdcounter++;
@@ -1192,15 +1193,15 @@
             var cdcol = $('thead tr:first th:first', g.hDiv).get(0);
             if(cdcol !== null) {
                 g.cDrag.className = 'cDrag';
-                g.cdpad = 0;
-                g.cdpad += (isNaN(parseInt($('div', cdcol).css('borderLeftWidth'), 10)) ? 0 : parseInt($('div', cdcol).css('borderLeftWidth'), 10));
-                g.cdpad += (isNaN(parseInt($('div', cdcol).css('borderRightWidth'), 10)) ? 0 : parseInt($('div', cdcol).css('borderRightWidth'), 10));
+                g.cdpad = 2;
+//                g.cdpad += (isNaN(parseInt($('div', cdcol).css('borderLeftWidth'), 10)) ? 0 : parseInt($('div', cdcol).css('borderLeftWidth'), 10));
+//                g.cdpad += (isNaN(parseInt($('div', cdcol).css('borderRightWidth'), 10)) ? 0 : parseInt($('div', cdcol).css('borderRightWidth'), 10));
                 g.cdpad += (isNaN(parseInt($('div', cdcol).css('paddingLeft'), 10)) ? 0 : parseInt($('div', cdcol).css('paddingLeft'), 10));
                 g.cdpad += (isNaN(parseInt($('div', cdcol).css('paddingRight'), 10)) ? 0 : parseInt($('div', cdcol).css('paddingRight'), 10));
-                g.cdpad += (isNaN(parseInt($(cdcol).css('borderLeftWidth'), 10)) ? 0 : parseInt($(cdcol).css('borderLeftWidth'), 10));
-                g.cdpad += (isNaN(parseInt($(cdcol).css('borderRightWidth'), 10)) ? 0 : parseInt($(cdcol).css('borderRightWidth'), 10));
-                g.cdpad += (isNaN(parseInt($(cdcol).css('paddingLeft'), 10)) ? 0 : parseInt($(cdcol).css('paddingLeft'), 10));
-                g.cdpad += (isNaN(parseInt($(cdcol).css('paddingRight'), 10)) ? 0 : parseInt($(cdcol).css('paddingRight'), 10));
+//                g.cdpad += (isNaN(parseInt($(cdcol).css('borderLeftWidth'), 10)) ? 0 : parseInt($(cdcol).css('borderLeftWidth'), 10));
+//                g.cdpad += (isNaN(parseInt($(cdcol).css('borderRightWidth'), 10)) ? 0 : parseInt($(cdcol).css('borderRightWidth'), 10));
+//                g.cdpad += (isNaN(parseInt($(cdcol).css('paddingLeft'), 10)) ? 0 : parseInt($(cdcol).css('paddingLeft'), 10));
+//                g.cdpad += (isNaN(parseInt($(cdcol).css('paddingRight'), 10)) ? 0 : parseInt($(cdcol).css('paddingRight'), 10));
                 $(g.bDiv).before(g.cDrag);
                 var cdheight = $(g.bDiv).height();
                 var hdheight = $(g.hDiv).height();
