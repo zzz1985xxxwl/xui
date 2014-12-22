@@ -109,7 +109,7 @@
 			blockOpacity: 0.5,
 			preProcess: false,
 			addTitleToCell: false, // add a title attr to cells with truncated contents
-			dblClickResize: false, //auto resize column by double clicking
+			dblClickResize: true, //auto resize column by double clicking
 			onDragCol: false,
 			onToggleCol: false,
 			onChangeSort: false,
