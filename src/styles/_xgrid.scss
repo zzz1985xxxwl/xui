@@ -1,0 +1,76 @@
+.xgrid {
+
+  %cell {
+    display: table-cell;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: $table-cell-padding;
+    border-right: 1px solid $table-border-color;
+  }
+  %row {
+    border-bottom: 1px solid $table-border-color;
+    &:nth-child(even){
+      background-color: $table-bg-active;
+    }
+    &:hover{
+      background-color: $table-bg-hover;
+    }
+  }
+  .xg-container {
+    @include clearfix();
+    border: 1px solid $table-border-color;
+    > div {
+      float: left;
+    }
+    .xg-left {
+      .xg-body:after{
+        content: '';
+        height: 30px;
+        display: block;
+      }
+    }
+    .xg-right {
+      overflow: hidden;
+    }
+  }
+  .hide-scroll{
+    overflow: hidden;
+    &.scroll{
+      overflow: auto;
+    }
+  }
+  .xg-head {
+    .xgh-row {
+      @extend %row;
+      font-weight: bold;
+    }
+    .xgh-cell {
+      @extend %cell;
+    }
+  }
+  .xg-body {
+    .xgb-row {
+      @extend %row;
+    }
+
+    .xgb-cell {
+      @extend %cell;
+    }
+  }
+
+  .xg-page {
+    @include clearfix();
+    margin-top: 8px;
+    > .info {
+      float: left;
+      padding-top: 10px;
+    }
+    > ul.pagination {
+      float: right;
+      margin: 0;
+      a {
+        cursor: pointer;
+      }
+    }
+  }
+}

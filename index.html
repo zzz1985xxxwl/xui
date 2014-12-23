@@ -83,10 +83,10 @@
         <table id="flexigrid">
             <thead>
             <tr>
-                <th width="100">Col 1</th>
-                <th width="100">Col 2</th>
-                <th width="100">Col 3 is a long header name</th>
-                <th width="300">Col 4</th>
+                <th width="100">Col1</th>
+                <th width="100">Col2</th>
+                <th width="100">Col3</th>
+                <th width="300">Col4</th>
             </tr>
             </thead>
             <tbody>
@@ -96,42 +96,13 @@
                 <td>This is data 3</td>
                 <td>This is data 4</td>
             </tr>
-            <tr>
-                <td>This is data 1</td>
-                <td>This is data 2</td>
-                <td>This is data 3</td>
-                <td>This is data 4</td>
-            </tr>
-            <tr>
-                <td>This is data 1</td>
-                <td>This is data 2</td>
-                <td>This is data 3</td>
-                <td>This is data 4</td>
-            </tr>
-            <tr>
-                <td>This is data 1</td>
-                <td>This is data 2</td>
-                <td>This is data 3</td>
-                <td>This is data 4</td>
-            </tr>
-            <tr>
-                <td>This is data 1</td>
-                <td>This is data 2</td>
-                <td>This is data 3</td>
-                <td>This is data 4</td>
-            </tr>
-            <tr>
-                <td>This is data 1</td>
-                <td>This is data 2</td>
-                <td>This is data 3</td>
-                <td>This is data 4</td>
-            </tr>
             </tbody>
         </table>
     </div>
     <div class="row">
-        <h1>Notify</h1>
+        <h1>XGrid</h1>
 
+        <div id="xgrid"></div>
     </div>
 </div>
 <script src="jquery/dist/jquery.js"></script>
@@ -151,6 +122,7 @@
 <script src="src/scripts/xui/nav.js"></script>
 <script src="src/scripts/xui/notify.js"></script>
 <script src="src/scripts/xui/flexigrid.js"></script>
+<script src="src/scripts/xui/xgrid.js"></script>
 <script>
     $(document).ready(function () {
         $("#btnNotify").click(function (event) {
@@ -168,11 +140,45 @@
         });
         $("#flexigrid").flexigrid({
             usepager: true,
-            title: 'Countries',
+            title: false,
             useRp: true,
             rp: 15,
-            width:500,
-            showTableToggleBtn: true
+            showTableToggleBtn: true,
+            colModel: [
+                { display: 'Col1', displayAlign: 'center', name: 'Col1', sortable: true, treeNode: true},
+                { display: 'Col2', displayAlign: 'center', name: 'Col2', align: 'left' },
+                { display: 'Col3', displayAlign: 'center', name: 'Col3', align: 'left' },
+                { display: 'Col4', displayAlign: 'center', name: 'Col4', align: 'left' },
+            ]
+        }).flexAddData({
+            rows: [
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1"},
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1-1"},
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1-2"},
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-2"},
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-2-1"},
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-2-1-1"},
+                {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-3"}
+            ], page: 1, total: 100
+        });
+        $("#xgrid").xgrid({
+            colModel: [
+                { display: 'Col1', displayAlign: 'center', width: 100, name: 'Col1', sortable: true, treeNode: true, fix: true},
+                { display: 'Col2', displayAlign: 'center', width: 200, name: 'Col2', align: 'left' },
+                { display: 'Col3', displayAlign: 'center', width: 500, name: 'Col3', align: 'left' },
+                { display: 'Col4', displayAlign: 'center', width: 600, name: 'Col4', align: 'left' },
+            ],
+            data:{
+                rows: [
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1"},
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1-1"},
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1-2"},
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-2"},
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-2-1"},
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-2-1-1"},
+                    {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-3"}
+                ], page: 2, total: 100
+            }
         });
     });
 </script>
