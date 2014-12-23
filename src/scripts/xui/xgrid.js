@@ -95,8 +95,10 @@
                 var $cell = makeCell(item);
                 gLeft.find("div.xgh-row").append($cell);
                 options.width -= $cell.outerWidth();
-                gRight.width(options.width).find('.hide-scroll').width(options.width);
             });
+
+            gRight.find('.hide-scroll').width(options.width);
+
             $.each(col, function (i, item) {
                 item.width = typeof item.width === "string" && item.width.indexOf('%') > 0 ? parseFloat(item.width) * 0.01 * (options.width) : item.width;
                 gRight.find('div.xgh-row').append(makeCell(item));
