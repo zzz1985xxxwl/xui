@@ -1,0 +1,107 @@
+.xgrid {
+  %cell {
+    display: table-cell;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: $table-cell-padding;
+    border-right: 1px solid $table-border-color;
+  }
+  %row {
+    border-bottom: 1px solid $table-border-color;
+
+  }
+  .xg-container {
+    @include clearfix();
+    border: 1px solid $table-border-color;
+    > div {
+      float: left;
+    }
+    .xg-left {
+      .xg-body:after {
+        content: '';
+        height: 30px;
+        display: block;
+      }
+    }
+    .xg-right {
+      overflow: hidden;
+      position: relative;
+      .xg-head {
+        width: 10000px;
+      }
+    }
+  }
+  .hide-scroll {
+    overflow: hidden;
+    &.scroll {
+      overflow: auto;
+    }
+  }
+  .xg-head {
+    .xgh-row {
+      @extend %row;
+      font-weight: bold;
+    }
+    .xgh-cell {
+      @extend %cell;
+      &.sortable {
+        cursor: pointer;
+      }
+    }
+  }
+  .xg-body {
+    .xgb-row {
+      @extend %row;
+      &:hover {
+        background-color: $table-bg-hover;
+      }
+      &:nth-child(even) {
+        background-color: $table-bg-active;
+      }
+    }
+    .xgb-cell {
+      @extend %cell;
+    }
+  }
+
+  .xg-page {
+    @include clearfix();
+    margin-top: 8px;
+    > .info {
+      float: left;
+      padding-top: 10px;
+    }
+    > ul.pagination {
+      float: right;
+      margin: 0;
+      a {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .xg-colResize {
+    position: relative;
+    z-index: 100;
+    > .xg-col-drag {
+      position: absolute;
+      width: 5px;
+      cursor: col-resize;
+      &:hover {
+        background-color: $table-border-color;
+      }
+    }
+  }
+
+  .xgh-sort {
+    position: absolute;
+    top: 18%;
+    right: 2px;
+    a {
+      display: block;
+      height: 5px;
+    }
+  }
+
+}
