@@ -13,10 +13,12 @@
     var XGrid = function ($this, options) {
         this.$grid = $this;
         this.options = $.extend({}, XGrid.DEFAULTS, options);
+        this.options.page.OrderBy = this.options.orderBy;
     };
 
     XGrid.DEFAULTS = {
-        url: "",
+        url: '',
+        orderBy: '',
         params: {},
         data: null,//{rows:[],page:1,total:100}
         colModel: [],//{ display: '列1', headAlign: 'center', bodyAlign:'left',name: 'Col1', sortable: true, treeNode: true,fix:true},
@@ -41,7 +43,7 @@
             },
             body: {
                 row: '<div class="xgb-row"></div>',
-                cell: '<div class="xgb-cell"></div>'
+                cell: '<div class="xgb-cell"><div class="xgb-c-content"></div></div>'
             },
             gContainer: '<div class="xg-container"></div>',
             gLeft: '<div class="xg-left"><div class="xg-head">' +
@@ -66,6 +68,8 @@
         this.gRightHead = this.gRight.find('.xg-head');
         this.scroll = this.gRight.find("div.scroll");
 
+        var lastItem = this.options.colModel[this.options.colModel.length - 1];
+        this.cellWidthPercent = typeof lastItem.width === "string" && lastItem.width.indexOf('%') > 0;
         this.$grid.append(
             this.gContainer.append(this.gLeft).append(this.gRight)
         ).addClass('xgrid');
@@ -107,10 +111,10 @@
             options.width -= $cell.outerWidth();
         });
 
-        gRight.find('.hide-scroll').width(options.width);
+        gRight.find('.hide-scroll').andSelf().width(options.width);
 
         $.each(col, function (i, item) {
-            item.width = typeof item.width === "string" && item.width.indexOf('%') > 0 ? parseFloat(item.width) * 0.01 * (options.width) : item.width;
+            item.width = self.cellWidthPercent ? parseFloat(item.width) * 0.01 * (options.width) : item.width;
             gRight.find('div.xgh-row').append(makeCell(item));
         });
 
@@ -137,6 +141,7 @@
 
         self.gRightBody.empty().width(self.calcRightBodyWidth());
         self.gLeftBody.empty();
+
         $.each(options.data.rows, function (i, item) {
             var $rowLeft = $(options.template.body.row),
                 $rowRight = $(options.template.body.row);
@@ -149,12 +154,17 @@
                 var colModel = options.colModel[j],
                     $cell = $(options.template.body.cell);
                 var $row = colModel.fix ? $rowLeft : $rowRight;
-                $cell.html(item[colModel.name]).css("text-align", item.bodyAlign).width(colModel.width);
                 $row.append($cell);
+                $cell.css("text-align", item.bodyAlign);
+                if (!self.cellContentDiff) {
+                    self.cellContentDiff = parseInt($cell.css('padding-left'), 10) * 2 + parseInt($cell.css('border-right-width'), 10);
+                }
+                $cell.children('.xgb-c-content').html(item[colModel.name]).width(colModel.width - self.cellContentDiff);
             }
         });
         self.buildPage();
         self.buildColReSize();
+        self.buildTreeNode();
     };
 
     XGrid.prototype.buildPage = function () {
@@ -199,6 +209,7 @@
 
         gPage.find('a').each(function () {
             var $this = $(this), $li = $this.parent(), c = $this.attr('class'), page = parseInt($this.text());
+            $this.attr('page', page);
             if (page === pageInfo.pageIndex) {
                 $li.addClass('active');
             }
@@ -209,7 +220,28 @@
             }
         });
         self.options.page.PageIndex = pageInfo.pageIndex;
-        this.$grid.append(gPage);
+        if (self.$grid.find('.xg-page').length === 0) {
+            bindEvent();
+        }
+        self.$grid.find('.xg-page').remove().end().append(gPage);
+
+        function bindEvent() {
+            self.$grid.on('click', '.xg-page a:not(.disabled)', function () {
+                var $this = $(this), nPage = 0;
+                if ($this.hasClass('first')) {
+                    nPage = 1;
+                } else if ($this.hasClass('prev')) {
+                    nPage = pageInfo.pageIndex - 1;
+                } else if ($this.hasClass('next')) {
+                    nPage = pageInfo.pageIndex + 1;
+                } else if ($this.hasClass('last')) {
+                    nPage = pageInfo.pageCount;
+                } else {
+                    nPage = parseInt($this.attr("page"));
+                }
+                self.load(nPage);
+            });
+        }
     };
 
     XGrid.prototype.buildColReSize = function () {
@@ -231,9 +263,9 @@
                     cell: self.gRightHead.find('.xgh-cell').eq(index),
                     oLeft: parseInt($this.css("left"), 10),
                     n: index,
-                    diff:0
+                    diff: 0
                 };
-                info.oWidth = info.cell.width();
+                info.oWidth = info.cell.outerWidth();
                 mouseMove();
                 mouseUp();
             });
@@ -242,11 +274,13 @@
                     $document.unbind('mousemove.xGridResize');
                     $document.unbind('mouseup.xGridResize');
                     self.gRightBody.width(self.calcRightBodyWidth()).children('.xgb-row').each(function (i, item) {
-                        $(item).children('.xgb-cell').eq(info.n).width(info.nWidth);
+                        var $bodyCell = $(item).children('.xgb-cell').eq(info.n);
+                        $bodyCell.children().outerWidth(info.nWidth - self.cellContentDiff);
                     });
-                    colResize.children().not(info.target).each(function(){
-                        $(this).css('left', parseInt($(this).css("left"), 10)+info.diff);
-                    })
+                    colResize.children().not(info.target).each(function () {
+                        $(this).css('left', parseInt($(this).css("left"), 10) + info.diff);
+                    });
+                    self.options.colModel[info.n].width = info.cell.outerWidth();
                 });
             }
 
@@ -257,9 +291,9 @@
                         nWidth = info.oWidth + diff;
                     if (nWidth > self.options.cellMinWidth) {
                         info.target.css('left', nLeft);
-                        info.cell.width(nWidth);
+                        info.cell.outerWidth(nWidth);
                         info.nWidth = nWidth;
-                        info.diff=diff;
+                        info.diff = diff;
                     }
                 });
             }
@@ -280,8 +314,30 @@
         });
     };
 
+    XGrid.prototype.buildTreeNode = function () {
+        var self = this,
+            options = self.options,
+            rows = self.options.data.rows,
+            rowsLength = rows.length;
+        $.each(options.colModel, function (i, item) {
+            if (item.treeNode) {
+                self.gRightBody.find('.xgb-row').each(function (j) {
+                    var $row = $(this),
+                        $cell = $row.children().eq(i),
+                        row = self.options.data.rows[j],
+                        treeNode = row.treeNode;
+                    $cell.addClass('xgb-tree xgb-node-p-' + (treeNode.split('-').length - 1)).attr('treeNode', treeNode);
+
+                    if (j < rowsLength - 1 && rows[j + 1].treeNode.indexOf(treeNode) >= 0) {
+                        $cell.addClass('xgb-node-parent').children('.xgb-c-content').prepend("<a class='xgb-node-toggle fa-minus-square'></a>");
+                    }
+                });
+            }
+        });
+    };
+
     XGrid.prototype.calcRightBodyWidth = function () {
-        var newTotalWidth = 30;
+        var newTotalWidth = this.cellWidthPercent ? 0 : 30;
         this.gRightHead.find(".xgh-row:eq(0)").children(".xgh-cell").each(function () {
             newTotalWidth += $(this).outerWidth();
         });
@@ -311,7 +367,30 @@
             $this.siblings('.sortable').find('.xgh-sort').children().css('visibility', 'visible');
             self.options.page.OrderBy = $this.attr("name") + ' ' + sort;
             self.load();
-        })
+        });
+
+        self.gRightBody.on('click', 'a.xgb-node-toggle', function () {
+            var $this = $(this),
+                $cell = $this.closest('.xgb-cell'),
+                isOpen = $this.hasClass('fa-minus-square'),
+                treeNode = $cell.attr('treeNode'),
+                $childRow = self.gRightBody.find('.xgb-cell[treeNode^=' + treeNode + '-]').parent();
+            if (isOpen) {
+                $this.removeClass('fa-minus-square').addClass('fa-plus-square');
+                $childRow.each(function () {
+                    if ($(this).css('display') !== 'none') {
+                        $(this).hide().data('closedBy', treeNode);
+                    }
+                });
+            } else {
+                $this.removeClass('fa-plus-square').addClass('fa-minus-square');
+                $childRow.each(function () {
+                    if ($(this).data('closedBy') === treeNode) {
+                        $(this).show();
+                    }
+                });
+            }
+        });
     };
 
     XGrid.prototype.load = function (pageIndex) {
@@ -338,7 +417,9 @@
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 try {
-                    if (self.options.onError) self.options.onError(XMLHttpRequest, textStatus, errorThrown);
+                    if (self.options.onError) {
+                        self.options.onError(XMLHttpRequest, textStatus, errorThrown);
+                    }
                 } catch (e) {
                 }
             }
@@ -371,7 +452,6 @@
 
     // XGrid NO CONFLICT
     // =================
-
     $.fn.xgrid.noConflict = function () {
         $.fn.xgrid = old;
         return this;

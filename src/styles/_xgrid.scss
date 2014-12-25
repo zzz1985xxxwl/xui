@@ -9,7 +9,6 @@
   }
   %row {
     border-bottom: 1px solid $table-border-color;
-
   }
   .xg-container {
     @include clearfix();
@@ -62,6 +61,20 @@
     }
     .xgb-cell {
       @extend %cell;
+      > .xgb-c-content {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      a.xgb-node-toggle {
+        margin-right: 2px;
+        margin-left: -12px;
+      }
+      @for $i from 1 through 10 {
+        &.xgb-node-p-#{$i} > .xgb-c-content {
+          padding-left: $i*20px;
+        }
+      }
     }
   }
 

@@ -81,9 +81,16 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     open: true,
-                    middleware: function(connect) {
+                    middleware: function(connect, options, middlewares) {
                         return [
-                            connect.static(require('path').resolve(''))
+                            connect.static(require('path').resolve('')),
+                            function(req, res, next) {
+                                if (req.url !== '/hello/world') {
+                                    next();
+                                    return;
+                                }
+                                res.end('Hello from port ' + options.port);
+                            }
                         ];
                     }
                 }
