@@ -56,7 +56,10 @@
         background-color: $table-bg-hover;
       }
       &:nth-child(even) {
-        background-color: $table-bg-active;
+        background-color: $table-bg-accent;
+        &:hover{
+          background-color: $table-bg-hover;
+        }
       }
     }
     .xgb-cell {
