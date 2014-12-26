@@ -12,16 +12,16 @@
 <div class="container">
     <div class="row">
         <h1>Font</h1>
-        <a href="http://fontawesome.io/icons/">font link</a>
+        <a href="http://fontawesome.io/icons/" target="_blank">font link</a>
         <i class="fa-glass"></i>
     </div>
     <div class="row">
         <h1>Bootstrap</h1>
-        <a href="http://v3.bootcss.com/components/"> bootstrap 样式参考</a>
+        <a href="http://v3.bootcss.com/components/" target="_blank"> bootstrap 样式参考</a>
     </div>
     <div class="row">
         <h1>Animation</h1>
-        <a href="http://nec.netease.com/framework/css-animation.html"> nec </a>
+        <a href="http://nec.netease.com/framework/css-animation.html" target="_blank"> nec </a>
         <button class="btn a-rotate-90 a-t-eo">abc</button>
     </div>
     <div class="row">
@@ -104,6 +104,43 @@
 
         <div id="xgrid"></div>
     </div>
+    <div class="row">
+        <h1>Validate</h1>
+
+        <form action="" class="form-horizontal">
+            <div class="form-group has-success  has-feedback">
+                <label class="col-sm-2 control-label" for="inputSuccess1">Input with success</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputSuccess1">
+                    <span class="fa fa-check form-control-feedback"></span>
+                </div>
+            </div>
+            <div class="form-group has-warning has-feedback">
+                <label class="col-sm-2 control-label" for="inputWarning1">Input with warning</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputWarning1">
+                    <span class="fa fa-warning form-control-feedback"></span>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <label class="col-sm-2 control-label" for="inputError1">Input with error</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" required id="inputError1">
+                    <span class=" form-control-feedback"></span>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <script src="jquery/dist/jquery.js"></script>
 <script src="src/scripts/xui/core.js"></script>
@@ -123,6 +160,7 @@
 <script src="src/scripts/xui/notify.js"></script>
 <script src="src/scripts/xui/flexigrid.js"></script>
 <script src="src/scripts/xui/xgrid.js"></script>
+<script src="src/scripts/xui/jquery.validate.js"></script>
 <script>
     $(document).ready(function () {
         $("#btnNotify").click(function (event) {
@@ -145,10 +183,10 @@
             rp: 15,
             showTableToggleBtn: true,
             colModel: [
-                { display: 'Col1', displayAlign: 'center', name: 'Col1', sortable: true, treeNode: true},
-                { display: 'Col2', displayAlign: 'center', name: 'Col2', align: 'left' },
-                { display: 'Col3', displayAlign: 'center', name: 'Col3', align: 'left' },
-                { display: 'Col4', displayAlign: 'center', name: 'Col4', align: 'left' },
+                {display: 'Col1', displayAlign: 'center', name: 'Col1', sortable: true, treeNode: true},
+                {display: 'Col2', displayAlign: 'center', name: 'Col2', align: 'left'},
+                {display: 'Col3', displayAlign: 'center', name: 'Col3', align: 'left'},
+                {display: 'Col4', displayAlign: 'center', name: 'Col4', align: 'left'},
             ]
         }).flexAddData({
             rows: [
@@ -163,17 +201,37 @@
         });
         $("#xgrid").xgrid({
             colModel: [
-                { display: 'Col1', displayAlign: 'center', width: '25%', name: 'Col1', sortable: true, treeNode: true},
-                { display: 'Col2', displayAlign: 'center', width: '25%', name: 'Col2', align: 'left' ,sortable:true},
-                { display: 'Col3', displayAlign: 'center', width: '25%', name: 'Col3', align: 'left' },
-                { display: 'Col4', displayAlign: 'center', width: '25%', name: 'Col4', align: 'left' },
+                {display: 'Col1', displayAlign: 'center', width: '25%', name: 'Col1', sortable: true, treeNode: true},
+                {display: 'Col2', displayAlign: 'center', width: '25%', name: 'Col2', align: 'left', sortable: true},
+                {display: 'Col3', displayAlign: 'center', width: '25%', name: 'Col3', align: 'left'},
+                {display: 'Col4', displayAlign: 'center', width: '25%', name: 'Col4', align: 'left'},
             ],
-            url:"/tests/xgdata.json",
-            orderBy:'col1 desc',
-            data:{
+            url: "/tests/xgdata.json",
+            orderBy: 'col1 desc',
+            data: {
                 rows: [
                     {Col1: "hello", Col2: "C2", Col3: "C3", Col4: "c4", treeNode: "node-1"},
                 ], page: 1, total: 1000
+            }
+        });
+
+        $("form").validate({
+            errorElement: "em",
+            errorClass:'error help-block',
+            errorPlacement: function(error, element) {
+                element.next().after(error);
+            },
+            success: function(label,element) {
+                $(element).after('<span class="fa fa-check form-control-feedback"></span>').closest('.form-group').addClass('has-success');
+            },
+            submitHandler: function() {
+                alert("submitted!");
+            },
+            highlight: function(element, errorClass,validClass) {
+                $(element).after('<span class="fa fa-exclamation-circle form-control-feedback"></span>').closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).closest('.form-group').removeClass('has-error').find('.fa-exclamation-circle').remove();
             }
         });
     });

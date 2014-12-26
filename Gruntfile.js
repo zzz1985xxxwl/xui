@@ -56,7 +56,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['src/scripts/xui/*.js'],
+                src: ['src/scripts/xui/core.js','src/scripts/xui/*.js'],
                 dest: 'src/scripts/xui.js'
             }
         },
