@@ -5,9 +5,6 @@
   "main": [
     "src/styles/xui.scss",
     "src/fonts/*.*",
-    "src/styles/xui.scss",
-    "src/fonts/*.*",
-    "src/scripts/xui.js",
     "src/scripts/xui/core.js",
     "src/scripts/xui/affix.js",
     "src/scripts/xui/alert.js",
