@@ -1,10 +1,25 @@
 {
-    "name": "uikit",
-    "version": "2.12.0",
-    "homepage": "http://getuikit.com",
-    "main": [
-        "scss/styles/*.scss",
-        "src/scripts/core/nav.js"
-    ],
-    "private": true
+  "name": "xui",
+  "version": "1.0.0",
+  "homepage": "",
+  "main": [
+    "src/styles/xui.scss",
+    "src/fonts/*.*",
+    "src/scripts/xui.js"
+  ],
+  "authors": [
+    "xue.wenlong"
+  ],
+  "description": "xui",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.3"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
