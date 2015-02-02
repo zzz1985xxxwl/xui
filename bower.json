@@ -1,10 +1,46 @@
 {
-    "name": "uikit",
-    "version": "2.12.0",
-    "homepage": "http://getuikit.com",
-    "main": [
-        "scss/styles/*.scss",
-        "src/scripts/core/nav.js"
-    ],
-    "private": true
+  "name": "xui",
+  "version": "1.0.0",
+  "homepage": "",
+  "main": [
+    "src/styles/xui.scss",
+    "src/fonts/*.*",
+    "src/styles/xui.scss",
+    "src/fonts/*.*",
+    "src/scripts/xui.js",
+    "src/scripts/xui/core.js",
+    "src/scripts/xui/affix.js",
+    "src/scripts/xui/alert.js",
+    "src/scripts/xui/button.js",
+    "src/scripts/xui/carousel.js",
+    "src/scripts/xui/collapse.js",
+    "src/scripts/xui/dropdown.js",
+    "src/scripts/xui/tab.js",
+    "src/scripts/xui/transition.js",
+    "src/scripts/xui/scrollspy.js",
+    "src/scripts/xui/modal.js",
+    "src/scripts/xui/tooltip.js",
+    "src/scripts/xui/popover.js",
+    "src/scripts/xui/nav.js",
+    "src/scripts/xui/notify.js",
+    "src/scripts/xui/xgrid.js"
+  ],
+  "authors": [
+    "xue.wenlong"
+  ],
+  "description": "xui",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.3"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Gruntfile.js",
+    "index.html",
+    "package.json"
+  ]
 }
